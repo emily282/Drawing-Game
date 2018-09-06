@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Drawing Game</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="main.js"></script>
+  <body>
+    <section class="container">
+      <div class="drawing-pad">
+        <canvas class="whiteboard"></canvas>
+      </div>
+
+      <div class= "info-panel">
+        <div class= "scoreboard">score</div>
+        <div class="chat-window">
+          <ul id="messages"></ul>
+          <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+          </form>
+        </div>
+      </div>
+
+      
+    </section>
+  </body>
+</html>
