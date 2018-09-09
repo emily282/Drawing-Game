@@ -4,6 +4,7 @@ $(function () {
   // drawing utensils
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var context = canvas.getContext('2d');
+  var colors = document.getElementsByClassName('color');
 
   var current = {
     color: 'black'
@@ -14,6 +15,10 @@ $(function () {
   canvas.addEventListener('mouseup', onMouseUp);
   canvas.addEventListener('mouseout', onMouseUp);
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10));
+
+  for (var i = 0; i < colors.length; i++){
+    colors[i].addEventListener('click', onColorUpdate);
+  }
 
   socket.on('drawing', onDrawingEvent);
 
@@ -75,10 +80,16 @@ $(function () {
     };
   }
 
-  function onDrawingEvent(data){
+  function onDrawingEvent(data) {
     var w = canvas.width;
     var h = canvas.height;
     drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+  }
+
+  function onColorUpdate(e) {
+    console.log("ding");
+    console.log(e.target.className.split(' ')[1]);
+    current.color = e.target.className.split(' ')[1];
   }
 
   function onResize() {
