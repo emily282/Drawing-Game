@@ -1,6 +1,9 @@
 $(function () {
   var socket = io();
 
+  // user info
+  var username;
+
   // drawing utensils
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var context = canvas.getContext('2d');
@@ -114,6 +117,18 @@ $(function () {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
   }
+
+  $('.username-input').focus();
+  $('.username-input').keypress(function (e) {
+    if (e.which == 13) {
+      username = $('.username-input').val();
+      socket.emit('add user', {
+        username: username
+      });
+      $('.modal').hide();
+      return false;    //<---- Add this line
+    }
+  });
 
   //chat message bit below
   $('form').submit(function(){

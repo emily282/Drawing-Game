@@ -18,8 +18,11 @@ function setupSocketListeners(io) {
   //TODO: Name these functions
   io.on('connection', function(socket) {
     //TODO: Update name to not be null
-    gameSession.addUser(null, socket.id);
-    console.log('a user connected');
+
+    socket.on('add user', function(data){
+      gameSession.addUser(data.username, socket.id);
+    });
+
 
     socket.on('chat message', function(msg){
       io.emit('chat message', msg);
@@ -31,6 +34,7 @@ function setupSocketListeners(io) {
     });
   
     socket.on('disconnect', function() {
+      //TODO: Check user exists
       console.log('user disconnected');
       gameSession.removeUser(socket.id);
     });

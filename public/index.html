@@ -2,12 +2,22 @@
 <html>
   <head>
     <title>Drawing Game</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
   </head>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="main.js"></script>
   <body>
+    <div class="modal">
+      <div class="modal-content">
+        <div class="form">
+          <h3 class= "title">Enter your username!</h3>
+          <input class="username-input" type="text" maxlength="15" />
+        </div>
+      </div>
+    </div>
+
     <section class="container">
       <div class="main-panel">
         <div class="top-bar">
