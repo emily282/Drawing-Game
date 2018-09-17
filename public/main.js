@@ -132,11 +132,16 @@ $(function () {
 
   //chat message bit below
   $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
+    socket.emit('chat message', {
+      username: username,
+      message: $('#m').val()
+    });
     $('#m').val('');
     return false;
   });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
+
+  socket.on('chat message', function(data){
+    $('#messages').append($('<li>').text(data.username + ': ' + data.message));
   });
 });
+
