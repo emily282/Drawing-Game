@@ -1,4 +1,5 @@
 User = require('./users');
+Words = require('./words');
 
 class GameSession {
   constructor() {
@@ -11,6 +12,7 @@ class GameSession {
     this.activeUser = null;
     this.usersPlayed = [];
     this.word = null;
+    this.words = null;
   }
 
   addUser(name, socketId) {
@@ -22,22 +24,23 @@ class GameSession {
   }
 
   getNextActiveUser() {
+    for (var user in this.users){
+      if (this.users.hasOwnProperty(user) && !this.usersPlayed.includes(user)) {
+        return user;
+      }
+    }
     return null;
   }
 
   startGame() {
-    this.activeUser = this.getNextActiveUser();
+    this.words = new Words('socks');
     this.startRound();
-  }
-
-  endGame() {
-    // Reset things
-    this.currentRound = 0;
   }
 
   startRound() {
     // Reset the list of users who have played
     this.usersPlayed = [];
+    this.activeUser = this.getNextActiveUser();
     this.currentRound += 1;
     startTurn(this.activeUser);
   }
@@ -52,7 +55,9 @@ class GameSession {
   }
 
   offerWords(userId) {
-    return null;
+    // Get the words from the word dictionary
+    // Send the possible words to the active user
+    let words = this.words.getWordOffers();
   }
 
   endTurn() {
@@ -62,6 +67,7 @@ class GameSession {
     //Perm scoreboard should update
 
     //New CAU assigned
+    this.usersPlayed.push(this.activeUser);
     this.activeUser = this.getNextActiveUser();
     if (this.activeUser !== null) {
       startTurn(this.activeUser);
@@ -70,6 +76,11 @@ class GameSession {
     } else {
       endGame();
     }
+  }
+
+  endGame() {
+    // Reset things
+    this.currentRound = 0;
   }
 }
 
