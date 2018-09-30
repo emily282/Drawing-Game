@@ -4,6 +4,7 @@
   "description": "my first game",
   "private": true,
   "scripts": {
+    "test": "mocha --recursive test",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -12,5 +13,10 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "uuid": "^3.3.2"
   }
 }
