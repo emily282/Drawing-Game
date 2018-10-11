@@ -2,7 +2,8 @@ $(function () {
   var socket = io();
 
   // user info
-  var username;
+  var username = null;
+  var activeUserId = null;
 
   // drawing utensils
   var canvas = document.getElementsByClassName('whiteboard')[0];
@@ -38,6 +39,10 @@ $(function () {
   onResize();
 
   function drawLine(x0, y0, x1, y1, color, thickness, emit){
+    console.log(emit, activeUserId, socket.id);
+    if (emit && activeUserId !== socket.id) {
+      return;
+    }
     context.beginPath();
     context.moveTo(x0, y0);
     context.lineTo(x1, y1);
@@ -143,5 +148,18 @@ $(function () {
   socket.on('chat message', function(data){
     $('#messages').append($('<li>').text(data.username + ': ' + data.message));
   });
+
+  // GAME STUFF
+  $('#startGameBtn').click(function startGame() {
+    socket.emit('start game', {});
+  });
+
+  socket.on('start game', function(currentActiveUser) {
+    $('#startGameBtn').hide();
+    console.log('ding');
+    console.log(currentActiveUser);
+    activeUserId = currentActiveUser;
+  });
+
 });
 

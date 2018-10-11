@@ -5,7 +5,7 @@ class GameSession {
   constructor() {
     this.users = {};
 
-    this.timePerTurn = 10000;
+    this.timePerTurn = 120000;
     this.numberOfRounds = 3;
     this.currentRound = 0;
 
@@ -42,7 +42,7 @@ class GameSession {
     this.usersPlayed = [];
     this.activeUser = this.getNextActiveUser();
     this.currentRound += 1;
-    startTurn(this.activeUser);
+    this.startTurn(this.activeUser);
   }
 
   startTurn(userId) {
@@ -51,7 +51,7 @@ class GameSession {
     // randomly select if they don't choose
     // Display word length to everyone else
     // Enable drawing pad for CAU
-    setTimeout(endTurn, this.timePerTurn);
+    // setTimeout(this.endTurn, this.timePerTurn);
   }
 
   offerWords(userId) {

@@ -17,12 +17,11 @@ app.use(express.static(__dirname + '/public'));
 function setupSocketListeners(io) {
   //TODO: Name these functions
   io.on('connection', function(socket) {
-    //TODO: Update name to not be null
+    // Run some startup logic to get game state
 
     socket.on('add user', function(data){
       gameSession.addUser(data.username, socket.id);
     });
-
 
     socket.on('chat message', function(data){
       io.emit('chat message', data);
@@ -32,6 +31,14 @@ function setupSocketListeners(io) {
     socket.on('drawing', function(data) {
       socket.broadcast.emit('drawing', data);
     });
+
+    socket.on('start game', function(data) {
+      gameSession.startGame();
+      // TODO: Make this more futureproof
+      io.emit('start game', gameSession.activeUser);
+    });
+
+    //TODO: Should add messages for start rounds/turns so CAU updates
   
     socket.on('disconnect', function() {
       //TODO: Check user exists
